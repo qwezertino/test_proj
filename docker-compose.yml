@@ -6,6 +6,15 @@ services:
             - 80:80
         volumes:
             - ./php_code/:/var/www/html/
+    php:
+        build: ./php_code/
+        expose:
+            - 9000
+        volumes:
+            - ./php_code/:/var/www/html/
+        env_file: .env
+        links:
+            - db:mysql
     db:
         image: mariadb:latest
         restart: always
@@ -21,17 +30,5 @@ services:
         volumes:
             - mysql-data:/var/lib/mysql
             - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-    php:
-        build: ./php_code/
-        expose:
-            - 9000
-        volumes:
-            - ./php_code/:/var/www/html/
-        env_file: .env
-        depends_on:
-            - db
-        links:
-            - db:mysql
-
 volumes:
     mysql-data:
