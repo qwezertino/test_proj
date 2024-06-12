@@ -1,0 +1,5 @@
+MYSQL_HOST=localhost
+MYSQL_DATABASE=testdb
+MYSQL_USER=testuser
+MYSQL_PASSWORD=secret
+MYSQL_ROOT_PASSWORD=secret

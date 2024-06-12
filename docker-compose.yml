@@ -1,0 +1,37 @@
+version: "3.9"
+services:
+    nginx:
+        build: ./nginx/
+        ports:
+            - 80:80
+        volumes:
+            - ./php_code/:/var/www/html/
+    db:
+        image: mariadb:latest
+        restart: always
+        env_file: .env
+        ports:
+            - 3306:3306
+        command: "--default-authentication-plugin=mysql_native_password"
+        environment:
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+        volumes:
+            - mysql-data:/var/lib/mysql
+            - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    php:
+        build: ./php_code/
+        expose:
+            - 9000
+        volumes:
+            - ./php_code/:/var/www/html/
+        env_file: .env
+        depends_on:
+            - db
+        links:
+            - db:mysql
+
+volumes:
+    mysql-data:
