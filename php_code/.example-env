@@ -1,0 +1,4 @@
+DB_HOSTNAME=db:3306
+DB_DATABASE=testdb
+DB_USERNAME=testuser
+DB_PASSWORD=secret

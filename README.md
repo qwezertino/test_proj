@@ -2,7 +2,7 @@
 Test project on Codeigniter 3
 
 ## INSTALLATION
-- Склонировать проект в любую директорию
+- Склонировать проект
 - Зайти в директорию `php_code` и запустить команду `composer install`
 - Переименовать файл `.example.env` в `.env`
 - Зайти в корневую директорию и запустить команду `docker-compose up -d`
