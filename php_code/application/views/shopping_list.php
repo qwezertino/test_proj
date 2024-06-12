@@ -77,7 +77,7 @@
         $('#add-item-form').on('submit', function(e) {
             e.preventDefault();
             $.ajax({
-                url: 'add_item',
+                url: 'shoppinglist/add_item',
                 type: 'POST',
                 data: $(this).serialize(),
                 success: function(data) {

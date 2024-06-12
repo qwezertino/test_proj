@@ -1,11 +1,5 @@
 version: "3.9"
 services:
-    nginx:
-        build: ./nginx/
-        ports:
-            - 80:80
-        volumes:
-            - ./php_code/:/var/www/html/
     php:
         build: ./php_code/
         expose:
@@ -15,6 +9,14 @@ services:
         env_file: .env
         links:
             - db:mysql
+    nginx:
+        build: ./nginx/
+        ports:
+            - 80:80
+        volumes:
+            - ./php_code/:/var/www/html/
+        depends_on:
+            - php
     db:
         image: mariadb:latest
         restart: always
@@ -30,5 +32,6 @@ services:
         volumes:
             - mysql-data:/var/lib/mysql
             - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
 volumes:
     mysql-data:
