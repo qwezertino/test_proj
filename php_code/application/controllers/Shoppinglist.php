@@ -14,19 +14,13 @@ class Shoppinglist extends CI_Controller
 	}
 
 	public function fetch_items() {
-		$category_id = $this->input->get('category_id');
-		$status = $this->input->get('status');
+		$filters = $this->input->get();
 
-		if (empty($category_id)) $category_id = null;
-		if (empty($status)) $status = null;
-
-		$filters = [];
-		if ($category_id !== null) {
-			$filters['category_id'] = $category_id;
-		}
-		if ($status !== null) {
-			$filters['status'] = $status;
-		}
+        foreach ($filters as $key => $value) {
+            if (empty($value)) {
+                unset($filters[$key]);
+            }
+        }
 
 		$items = $this->Item_model->get_items($filters);
 		$data['items'] = $items;

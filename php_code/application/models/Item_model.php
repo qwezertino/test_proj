@@ -7,14 +7,12 @@ class Item_model extends CI_Model
 	}
 
 	public function get_items($filters = []) {
-		if (!empty($filters)) {
-			if (isset($filters['category_id'])) {
-				$this->db->where('items.category_id', $filters['category_id']);
-			}
-			if (isset($filters['status'])) {
-				$this->db->where('items.status', $filters['status']);
+		foreach ($filters as $key => $value) {
+			if (in_array($key, ['category_id', 'status'])) {
+				$this->db->where('items.' . $key, $value);
 			}
 		}
+
 		$this->db->select('items.*, categories.name as category_name');
 		$this->db->from('items');
         $this->db->join('categories', 'items.category_id = categories.id', 'left');
